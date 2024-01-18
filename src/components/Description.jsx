@@ -1,6 +1,8 @@
+import styles from './Description.module.css';
+
 export const Description = () => {
   return (
-    <div>
+    <div className={styles.container}>
       <header>
         <h1>Sip Happens Café</h1>
         <p>

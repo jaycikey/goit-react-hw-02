@@ -1,4 +1,5 @@
 import { Button } from './Button';
+import styles from './Options.module.css';
 
 export const Options = ({
   items: { good, neutral, bad },
@@ -9,7 +10,7 @@ export const Options = ({
 }) => {
   const totalFeedback = good + neutral + bad;
   return (
-    <div>
+    <div className={styles.optionsContainer}>
       <Button onClick={handleClickGood}>Good</Button>
       <Button onClick={handleClickNeutral}>Neutral</Button>
       <Button onClick={handleClickBad}>Bad</Button>
