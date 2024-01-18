@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Description } from './Description';
-import { Feedback } from './Feedback';
-import { Options } from './Options';
+import { Description } from './Description/Description';
+import { Feedback } from './Feedback/Feedback';
+import { Options } from './Options/Options';
 
 export const App = () => {
   const [feedback, setFeedback] = useState({

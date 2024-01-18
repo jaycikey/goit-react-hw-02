@@ -1,4 +1,4 @@
-import { Button } from './Button';
+import { Button } from '../Button/Button';
 import styles from './Options.module.css';
 
 export const Options = ({

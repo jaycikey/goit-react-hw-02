@@ -1,4 +1,4 @@
-import { Notification } from './Notification';
+import { Notification } from '../Notification/Notification';
 import styles from './Feedback.module.css';
 
 export const Feedback = ({ items: { good, neutral, bad } }) => {
