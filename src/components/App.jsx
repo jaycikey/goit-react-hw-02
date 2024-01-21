@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 import { Description } from './Description/Description';
 import { Feedback } from './Feedback/Feedback';
 import { Options } from './Options/Options';
+import { Notification } from './Notification/Notification';
 
 export const App = () => {
   const [feedback, setFeedback] = useState(() => {
-    const isFeedbackYet = window.localStorage.getItem('feedback');
+    const savedFeedback = window.localStorage.getItem('feedback');
 
-    return isFeedbackYet !== null
-      ? JSON.parse(isFeedbackYet)
+    return savedFeedback !== null
+      ? JSON.parse(savedFeedback)
       : {
           good: 0,
           neutral: 0,
@@ -16,50 +17,34 @@ export const App = () => {
         };
   });
 
-  const handleClickGood = () => {
+  const handleClick = (type) => {
     setFeedback(prevFeedback => ({
       ...prevFeedback,
-      good: prevFeedback.good + 1,
-    }));
-  };
-
-  const handleClickNeutral = () => {
-    setFeedback(prevFeedback => ({
-      ...prevFeedback,
-      neutral: prevFeedback.neutral + 1,
-    }));
-  };
-
-  const handleClickBad = () => {
-    setFeedback(prevFeedback => ({
-      ...prevFeedback,
-      bad: prevFeedback.bad + 1,
+      [type]: prevFeedback[type] + 1,
     }));
   };
 
   const handleClickReset = () => {
-    setFeedback({
-      good: 0,
-      neutral: 0,
-      bad: 0,
-    });
+    setFeedback({ good: 0, neutral: 0, bad: 0 });
   };
 
   useEffect(() => {
     window.localStorage.setItem('feedback', JSON.stringify(feedback));
   }, [feedback]);
 
+  const { good, neutral, bad } = feedback;
+  const totalFeedback = good + neutral + bad;
+  const positive = Math.round(((good + neutral) / totalFeedback) * 100);
+  
   return (
     <div>
       <Description />
       <Options
-        items={feedback}
-        handleClickGood={handleClickGood}
-        handleClickNeutral={handleClickNeutral}
-        handleClickBad={handleClickBad}
+        totalFeedback={totalFeedback}
+        handleClick={handleClick}
         handleClickReset={handleClickReset}
       />
-      <Feedback items={feedback} />
+      {totalFeedback > 0 ? (<Feedback items={feedback} positive={positive} />) : (<Notification message="No feedback given yet." />)}
     </div>
   );
 };
