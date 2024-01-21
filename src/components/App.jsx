@@ -6,12 +6,14 @@ import { Options } from './Options/Options';
 export const App = () => {
   const [feedback, setFeedback] = useState(() => {
     const isFeedbackYet = window.localStorage.getItem('feedback');
-    
-    return isFeedbackYet !== null ? JSON.parse(isFeedbackYet) : {
-      good: 0,
-      neutral: 0,
-      bad: 0,
-    };
+
+    return isFeedbackYet !== null
+      ? JSON.parse(isFeedbackYet)
+      : {
+          good: 0,
+          neutral: 0,
+          bad: 0,
+        };
   });
 
   const handleClickGood = () => {
@@ -42,7 +44,7 @@ export const App = () => {
       bad: 0,
     });
   };
- 
+
   useEffect(() => {
     window.localStorage.setItem('feedback', JSON.stringify(feedback));
   }, [feedback]);
