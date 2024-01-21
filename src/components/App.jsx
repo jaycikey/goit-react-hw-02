@@ -1,13 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Description } from './Description/Description';
 import { Feedback } from './Feedback/Feedback';
 import { Options } from './Options/Options';
 
 export const App = () => {
-  const [feedback, setFeedback] = useState({
-    good: 0,
-    neutral: 0,
-    bad: 0,
+  const [feedback, setFeedback] = useState(() => {
+    const isFeedbackYet = window.localStorage.getItem('feedback');
+    
+    return isFeedbackYet !== null ? JSON.parse(isFeedbackYet) : {
+      good: 0,
+      neutral: 0,
+      bad: 0,
+    };
   });
 
   const handleClickGood = () => {
@@ -38,6 +42,10 @@ export const App = () => {
       bad: 0,
     });
   };
+ 
+  useEffect(() => {
+    window.localStorage.setItem('feedback', JSON.stringify(feedback));
+  }, [feedback]);
 
   return (
     <div>
